@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
 
 
   }
-
+  
   toggleLogin() {
     this.isLoggedIn = !this.isLoggedIn;
     if (this.isLoggedIn)

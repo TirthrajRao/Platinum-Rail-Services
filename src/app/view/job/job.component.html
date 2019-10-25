@@ -47,14 +47,15 @@
                                 formControlName="instructor" [(ngModel)]="singleInstructorName">
                                 <!-- <option>Choose Instructor</option> -->
                                 <option value="{{name.instructorName}}" *ngFor="let name of listOfInstructor">
-                                    {{name.instructorName}}</option>
+                                    {{name.instructorName}}
+                                    <!-- <img src="/assets/images/drpo-down.png"> -->
+                                </option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="courseName">Choose Course</label>
                             <select class="browser-default custom-select" (change)="selectHandlerChange($event)"
                                 id="courseName" formControlName="course" [(ngModel)]="singleCourseName">
-                                <option>Choose Course</option>
                                 <option [value]="name.courseName" *ngFor="let name of listOfCourse">{{name.courseName}}
                                 </option>
                             </select>
@@ -70,14 +71,14 @@
                         <div class="col-md-4">
                             <!-- <div formArrayName="frequency">
                                 <div [formGroupName]="i" *ngFor="let tech of createNewJobForm.controls.frequency.controls; let i = index"> -->
-                                    <label for="">Choose Frequency</label>
-                                    <div class="form-check" *ngFor="let name of weekDays">
-                                        <input type="checkbox" class="form-check-input" [checked]="name.selected"
-                                            (change)="selectFreequncy($event.target.checked,name.name)"  id="{{name.name}}"
-                                            name="materialExampleRadios">
-                                        <label class="form-check-label" for="{{name.name}}">{{name.name}}</label>
-                                    </div>
-                                <!-- </div>
+                            <label for="">Choose Frequency</label>
+                            <div class="form-check" *ngFor="let name of weekDays">
+                                <input type="checkbox" class="form-check-input" [checked]="name.selected"
+                                    (change)="selectFreequncy($event.target.checked,name.name)" id="{{name.name}}"
+                                    name="materialExampleRadios">
+                                <label class="form-check-label" for="{{name.name}}">{{name.name}}</label>
+                            </div>
+                            <!-- </div>
                             </div> -->
                         </div>
 
@@ -86,14 +87,22 @@
                                 <i class="fas fa-calendar-alt"></i>
                                 <span class="ml-2"> Dates for the job </span>
                                 <div class="table-responsive">
-                                    <table class="table text-left" id="dtBasicExample">
+                                    <table class="table text-left" id="dtBasicExample2">
                                         <tr>
                                             <th>Sr.No</th>
                                             <th>Date</th>
                                         </tr>
                                         <tr *ngFor="let dates of allDatesOfDay;let i=index">
                                             <td>{{i+1}}</td>
-                                            <td>{{dates}}</td>
+                                            <td>{{dates}}
+                                            </td>
+                                            <td>
+                                                <div class="md-form">
+                                                    <input type="text" id="selectedDate{{i}}"
+                                                        class="form-control datepicker" style="display:none">
+                                                    <label for="selectedDate{{i}}"></label>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>

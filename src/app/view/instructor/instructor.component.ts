@@ -10,31 +10,54 @@ declare var $: any;
 })
 export class InstructorComponent implements OnInit {
   @Output() courseIndex;
+  @Output() dashBoardIndex;
   createInstructorForm: FormGroup;
   modelValues: any;
   instructorList = [];
   allResponse = [];
   instructorHeader = [
     'Sr.No', 'Name', 'Jobs'
-  ]
+  ];
+  show1: boolean;
+  pwd1: boolean;
+  isVisibleConformPassword: boolean = true;
   constructor(public adminService: AdminService) { }
 
   ngOnInit() {
 
+    /**
+     * Create new instructor form
+     */
     this.createInstructorForm = new FormGroup({
       name: new FormControl(this.modelValues ? this.modelValues.name : ''),
       email: new FormControl(this.modelValues ? this.modelValues.email : ''),
       password: new FormControl(this.modelValues ? this.modelValues.password : ''),
       confirmPassword: new FormControl(''),
     });
+
+
+    /**
+     *Password show hide
+     */
+    $(".toggle-password").click(function () {
+      $(this).toggleClass("fa-eye fa-eye-slash");
+    });
+
     this.getInstructorsList();
 
+
+    /**
+     * model value reset after modal close
+     */
     $('#modalLoginForm').on('hidden.bs.modal', function () {
       this.modelValues = null
       console.log("value of modal", this.modelValues)
     });
   }
 
+  /**
+   * Add new instructor
+   */
   addNewInstructor() {
     console.log("instructors details", this.createInstructorForm.value);
     this.adminService.createNewInstructor(this.createInstructorForm.value)
@@ -42,11 +65,19 @@ export class InstructorComponent implements OnInit {
     $('#modalLoginForm').modal('toggle'); //or  $('#IDModal').modal('hide');
 
   }
-  updateInstructor(){
+
+  /**
+   * Update instructor
+   */
+  updateInstructor() {
     console.log("updated value ", this.createInstructorForm.value);
     this.adminService.updateInstructor(this.createInstructorForm.value)
     $('#modalLoginForm').modal('toggle');
   }
+
+  /**
+   * get all instructors List
+   */
   getInstructorsList() {
     this.adminService.getInstructorsList().subscribe((data: any) => {
       const dataStr = JSON.stringify(data);
@@ -63,7 +94,12 @@ export class InstructorComponent implements OnInit {
   }
 
 
+  /**
+   * @param event index of single element
+   * get index and display details
+   */
   getIndexToEdit(event) {
+    this.isVisibleConformPassword = false;
     console.log('got index in course', event);
     this.modelValues = this.allResponse[event];
     this.createInstructorForm.controls.name.setValue(this.modelValues.instructorName);
@@ -72,12 +108,22 @@ export class InstructorComponent implements OnInit {
     $('#modalLoginForm').modal('show');
   }
 
+  /**
+   * open modal 
+   */
   openModal() {
+    this.isVisibleConformPassword = true;
     this.modelValues = null;
     this.createInstructorForm.reset();
     console.log("open modal", this.modelValues, this.createInstructorForm.value)
     $('#modalLoginForm').modal('show');
 
   }
-
+  /**
+   * password show and disable
+   */
+  password1() {
+    this.show1 = !this.show1;
+    this.pwd1 = !this.pwd1;
+  }
 }

@@ -3,8 +3,7 @@
         <div class="row">
             <div class="table-component-header w-100 p-3">
                 <span class="float-left ml-3">Instructor</span>
-                <button class="btn btn-primary float-right" (click)="openModal()"><i
-                        class="fas fa-plus mr-2"></i> Add
+                <button class="btn btn-primary float-right" (click)="openModal()"><i class="fas fa-plus mr-2"></i> Add
                     Instructor</button>
             </div>
         </div>
@@ -12,7 +11,8 @@
 </div>
 
 
-<app-tabel [instructorList]='instructorList' [instructorHeader]='instructorHeader' (courseIndex)="getIndexToEdit($event)"></app-tabel>
+<app-tabel [instructorList]='instructorList' [instructorHeader]='instructorHeader'
+    (courseIndex)="getIndexToEdit($event)"></app-tabel>
 
 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
@@ -34,11 +34,15 @@
                         <input type="email" class="form-control" formControlName="email">
                         <label data-error="wrong" data-success="right" for="defaultForm-pass">Email Address</label>
                     </div>
-                    <div class="md-form">
-                        <input type="password" class="form-control" formControlName="password">
+                    <div class="md-form input_with_icont">
+                        <input id="pwd1" type="password" class="form-control" [type]="show1 ? 'text' : 'password'" formControlName="password">
+                        <span toggle="#password-field" class="fa fa-fw fa-eye-slash field-icon toggle-password"
+                            (click)="password1()"></span>
+                            <!-- <input type="password" class="form-control" id="pwd1" placeholder="New Password"
+                            formControlName="newPassword" name="pwd1" [type]="show1 ? 'text' : 'password'"> -->
                         <label data-error="wrong" data-success="right" for="defaultForm-email">Password</label>
                     </div>
-                    <div class="md-form" >
+                    <div class="md-form" *ngIf="isVisibleConformPassword == true">
                         <input type="password" class="form-control" formControlName="confirmPassword">
                         <label data-error="wrong" data-success="right" for="defaultForm-email">Confirm Password</label>
                     </div>

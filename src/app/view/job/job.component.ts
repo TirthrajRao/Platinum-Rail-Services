@@ -49,14 +49,7 @@ export class JobComponent implements OnInit {
 
   ngOnInit() {
 
-    $('input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], input[type=date], input[type=time], textarea').each(function (element, i) {
-      if ((element.value !== undefined && element.value.length > 0) || $(this).attr('placeholder') !== null) {
-        $(this).siblings('label').addClass('active');
-      }
-      else {
-        $(this).siblings('label').removeClass('active');
-      }
-    });
+
     // this.getJobFrom()
     this.createNewJobForm = new FormGroup({
       clientName: new FormControl(this.modelValues ? this.modelValues.client : ''),
@@ -64,12 +57,14 @@ export class JobComponent implements OnInit {
       instructor: new FormControl(this.modelValues ? this.modelValues.instructor : ''),
       course: new FormControl(this.modelValues ? this.modelValues.course : ''),
       startingDate: new FormControl(this.modelValues ? this.modelValues.startingDate : ''),
-      frequency: this.fb.array([])
+      frequency: this.fb.array([]),
+      allDatesOfDay:new FormControl('')
     });
 
     this.getJobList();
     this.getInstructorsList();
     this.getCourseList();
+  
     $('#startDate').pickadate({
       onSet: function (date1) {
         this.startingDateValue = $('#startDate').val();
@@ -83,80 +78,9 @@ export class JobComponent implements OnInit {
 
   }
 
-  // initJob(data?){
-  //   this.createNewJobForm = new FormGroup({
-  //     clientName: new FormControl(this.modelValues ? this.modelValues.client : ''),
-  //     location: new FormControl(this.modelValues ? this.modelValues.location : ''),
-  //     instructor: new FormControl(this.modelValues ? this.modelValues.instructor : ''),
-  //     course: new FormControl(this.modelValues ? this.modelValues.course : ''),
-  //     startingDate: new FormControl(this.modelValues ? this.modelValues.startingDate : ''),
-  //     frequency: this.fb.array(this.weekArray(data))
-  //   });
-  // }
-
-
-  // weekArray(details) {
-  //   console.log("details of checkbox", details)
-  //   if (details) {
-  //     let weekArray = [];
-  //     for (let i = 0; i < details.length; i++) {
-  //       if (details[i]) {
-  //         weekArray.push(this.fb.group({
-  //           frequencyName: new FormControl(details[i])
-  //         }))
-  //       }
-  //     }
-  //     console.log("hellllllloooooooo", this.createNewJobForm)
-  //     return weekArray;
-
-  //   }
-  //   else {
-  //     return this.fb.group({
-  //       frequencyName: new FormControl(details)
-  //     })
-  //   }
-  // }
-
-  // getJobFrom(createdActivity?) {
-  //   console.log("update activity details", createdActivity);
-  //   this.createNewJobForm = new FormGroup({
-  //     clientName: new FormControl(this.modelValues ? this.modelValues.client : ''),
-  //     location: new FormControl(this.modelValues ? this.modelValues.location : ''),
-  //     instructor: new FormControl(this.modelValues ? this.modelValues.instructor : ''),
-  //     course: new FormControl(this.modelValues ? this.modelValues.course : ''),
-  //     startingDate: new FormControl(this.modelValues ? this.modelValues.startingDate : ''),
-  //     frequency: this.fb.array(this.weekArray(createdActivity))
-  //   })
-  // }
-
   /**
-   * @param {String} activities
-   *  To create new activity
+   * Details of instructors
    */
-  // weekArray(activities?: any[]) {
-  //   console.log("activities", activities);
-  //   if (!activities) {
-  //     return [this.fb.group({
-  //       frequencyName: new FormControl(''),
-  //     })]
-  //   }
-  //   /**
-  //    * To edit created activities
-  //    */
-
-  //   let actArray = [];
-  //   for (let i = 0; i < activities.length; i++) {
-  //     actArray.push(this.fb.group({
-  //       frequencyName: new FormControl(activities[i]),
-  //     }))
-  //   }
-  //   console.log("helllllllllll------", actArray)
-  //   return actArray;
-  // }
-
-
-
-
   getInstructorsList() {
     this.adminService.getInstructorsList().subscribe((data: any) => {
       this.listOfInstructor = data;
@@ -164,6 +88,10 @@ export class JobComponent implements OnInit {
     })
   }
 
+  /**
+   * @param event change event of select course
+   * get course name and find duration of that course 
+   */
   selectHandlerChange(event) {
     let course
     course = event.target.value
@@ -178,12 +106,16 @@ export class JobComponent implements OnInit {
 
 
 
+  /**
+   * @param isChecked selected value is true or false
+   * @param day selected days list
+   * display selected day all dates
+   */
   selectFreequncy(isChecked, day) {
     console.log("selected days", day)
     if (isChecked == true) {
       this.selectedDays.push(day);
       console.log("selected week days", this.selectedDays)
-      // this.getJobFrom(this.selectedDays);
     }
     else {
       console.log(this.selectedDays.indexOf(day));
@@ -216,8 +148,16 @@ export class JobComponent implements OnInit {
 
     }
     this.allDatesOfDay = alldates;
+    this.createNewJobForm.controls.allDatesOfDay.setValue(this.allDatesOfDay);
+    _.forEach(this.allDatesOfDay,(date,index)=>{
+      console.log("index of date", index)
+      $('#selectedDate' + index).pickadate()
+    })
+    console.log("form===========>",this.createNewJobForm.value)
   }
-
+  /**
+   * get all list of course
+   */
   getCourseList() {
     this.adminService.getCoursesList().subscribe((data: any) => {
       this.listOfCourse = data;
@@ -225,6 +165,9 @@ export class JobComponent implements OnInit {
     })
   }
 
+  /**
+   * get list of jobs
+   */
   getJobList() {
     this.adminService.getJobList().subscribe((data: any) => {
       const dataStr = JSON.stringify(data);
@@ -233,56 +176,60 @@ export class JobComponent implements OnInit {
         delete val.startingDate
         delete val.frequency
         delete val.dateArray
+        delete val.allDatesOfDay
         this.jobList.push(Object.values(val));
       })
     })
   }
-
+  /**
+   * add new job 
+   */
   addNewJob() {
-    let checked = $('input[name="materialExampleRadios"]:checked').val();
-    console.log("checked value", checked)
-    // this.createNewJobForm.controls.frequency.setValue(this.selectedDays);
     this.startingDateValue = this.createNewJobForm.controls.startingDate.setValue($('#startDate').val());
     console.log("create new job details", this.createNewJobForm.value)
+    // let checked = $('input[name="materialExampleRadios"]:checked').val();
+    // console.log("checked value", checked)
+    this.adminService.addJob(this.createNewJobForm.value)
     $('#modalLoginForm').modal('toggle');
     this.createNewJobForm.reset();
   }
 
+  updateJob(){
+    this.adminService.updateJob(this.createNewJobForm.value)
+    $('#modalLoginForm').modal('toggle');
+
+  }
+
+  /**
+   * @param event get index of edit element
+   * get index value and open edit modal
+   */
   getIndexToEdit(event) {
     console.log('got index in course', event);
     this.modelValues = this.allResponse[event];
-    console.log("modalvalues===========>", this.modelValues)
-    // _.forEach(this.modelValues.frequency ,(data)=>{
-    //   console.log("frewuency data", data)
-    // })
+    console.log("modalvalues===========>", this.modelValues);
+    this.allDatesOfDay = this.modelValues.allDatesOfDay;
     this.frequencyName = this.modelValues.frequency
     this.singleInstructorName = this.modelValues.instructor;
     this.singleCourseName = this.modelValues.course
     console.log(this.frequencyName);
     _.forEach(this.weekDays, (day, index) => {
-      // console.log(day);
       _.forEach(this.frequencyName, (selectDay) => {
-        // console.log(selectDay);
         if (day.name == selectDay) {
           this.weekDays[index]['selected'] = 'true'
         }
-        // else{
-        //   this.weekDays[index]['selected'] ='false'
-        // }
       })
     })
     console.log("key set====>", this.weekDays)
-    // this.getJobFrom(this.frequencyName)
-    // this.createNewJobForm.controls.frequency.setValue(this.modelValues.frequency)
     this.createNewJobForm.controls.clientName.setValue(this.modelValues.client);
     this.createNewJobForm.controls.location.setValue(this.modelValues.location);
     this.createNewJobForm.controls.startingDate.setValue(this.modelValues.startingDate);
-
-    // this.createCourseForm.controls.duration.setValue(this.modelValues.duration);
     $('#modalLoginForm').modal('show');
   }
 
-
+  /**
+   * open modal
+   */
   openModal() {
     this.modelValues = null;
     this.createNewJobForm.reset();
@@ -290,37 +237,3 @@ export class JobComponent implements OnInit {
     $('#modalLoginForm').modal('show');
   }
 }
-
-
-
-
-// const weekArray = <FormArray>this.createNewJobForm.controls.frequency;
-//     if (isChecked) {
-//       weekArray.push(new FormControl(day))
-//     }
-//     else {
-//       weekArray.push(new FormControl(''))
-//     }
-
- // maleItemArray(details?): any {
-  //   if (details) {
-  //     let maleArray = [];
-  //     for (let i = 0; i < details.length; i++) {
-  //       if (details[i].itemGender === 'male') {
-  //         maleArray.push(this.fb.group({
-  //           itemId: new FormControl(details[i]._id),
-  //           itemName: new FormControl(details[i].itemName),
-  //           itemType: new FormControl(details[i].itemType),
-  //           itemPrice: new FormControl(details[i].itemPrice)
-  //         }))
-  //       }
-  //     }
-  //     return maleArray;
-  //   } else {
-  //     return this.fb.group({
-  //       itemName: new FormControl(''),
-  //       itemType: new FormControl(''),
-  //       itemPrice: new FormControl('')
-  //     })
-  //   }
-  // }

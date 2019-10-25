@@ -25,27 +25,29 @@ export class CourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    $('input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], input[type=date], input[type=time], textarea').each(function (element, i) {
-      if ((element.value !== undefined && element.value.length > 0) || $(this).attr('placeholder') !== null) {
-          $(this).siblings('label').addClass('active');
-      }
-      else {
-          $(this).siblings('label').removeClass('active');
-      }
-  });
-    // console.log("index of course", this.courseIndex)
+
+    /**
+     * create New Form
+     */
     this.createCourseForm = new FormGroup({
       courseName: new FormControl(this.modelValues ? this.modelValues.courseName : ''),
       duration: new FormControl(this.modelValues ? this.modelValues.duration : '')
     });
     this.getCourseList()
+
+
+    /**
+     * model value reset after modal close
+     */
     $('#modalLoginForm').on('hidden.bs.modal', function () {
       this.modelValues = null
       console.log("value of modal", this.modelValues)
     });
   }
 
-
+  /**
+   * Get course list 
+   */
   getCourseList() {
     this.adminService.getCoursesList().subscribe((data: any) => {
       const dataStr = JSON.stringify(data);
@@ -56,17 +58,29 @@ export class CourseComponent implements OnInit {
       console.log("course list data", this.courseList)
     })
   }
+
+  /**
+   * Add new course 
+   */
   addNewCourse() {
     console.log("new course details", this.createCourseForm.value)
     this.adminService.createNewCourse(this.createCourseForm.value)
     this.createCourseForm.reset();
     $('#modalLoginForm').modal('toggle');
   }
+
+  /**
+   * Update course details
+   */
   updateCourse() {
     this.adminService.updateCourse(this.createCourseForm.value)
     $('#modalLoginForm').modal('toggle');
   }
 
+  /**
+   * @param event get index of single element
+   * get index and display details
+   */
   getIndexToEdit(event) {
     console.log('got index in course', event);
     this.modelValues = this.allResponse[event];
@@ -75,6 +89,10 @@ export class CourseComponent implements OnInit {
     this.createCourseForm.controls.duration.setValue(this.modelValues.duration);
     $('#modalLoginForm').modal('show');
   }
+
+  /**
+   * open modal
+   */
   openModal() {
     this.modelValues = null;
     this.createCourseForm.reset();

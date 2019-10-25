@@ -19,10 +19,10 @@ export class TabelComponent implements OnInit {
   headerList = [];
   Page: Number = 1;
   currentUrl;
-  isDisplayColor:boolean = false;
-  public labels: any = {
-    previousLabel: '<'
-  }
+  isDisplayColor: boolean = false;
+  // public labels: any = {
+  //   previousLabel: '<'
+  // }
 
 
   constructor(private route: ActivatedRoute, private router: Router) {
@@ -36,17 +36,22 @@ export class TabelComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.instructorList, this.coursList, this.jobList)
     this.getDetails()
+
     $('li').click(function () {
       $(this).addClass('active').siblings().removeClass('active');
     });
   }
+
+
+  /**
+   * get Details of any page used of activeted router
+   */
   getDetails() {
     if (this.currentUrl == '/jobDetails') {
       this.receviedData = this.jobList;
       this.headerList = this.jobHeader;
-      
+
     }
     if (this.currentUrl == '/course') {
       this.receviedData = this.coursList;
@@ -61,10 +66,19 @@ export class TabelComponent implements OnInit {
 
     console.log("course Detaoils", this.receviedData);
   }
+
+  /**
+   * @param event get active router
+   */
   checkRouterEvent(event) {
     console.log("current url", event.url);
     this.currentUrl = event.url
   }
+
+  /**
+   * @param data single element index
+   * Element index emit  
+   */
   editCourseOrInstructor(data) {
     console.log("edit events", data)
     this.courseIndex.emit(data);

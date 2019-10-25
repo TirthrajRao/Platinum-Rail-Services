@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -10,15 +10,29 @@ export class DashboardComponent implements OnInit {
 
   instructorsList;
   courseList;
-
+  allCounts;
+  @Output() dashBoardIndex: EventEmitter<any> = new EventEmitter<any>();;
   constructor(public adminService: AdminService) {
 
+    /**
+     * get instructorsList
+     */
     this.adminService.getInstructorsList().subscribe((data: any) => {
       this.instructorsList = data;
       console.log("instructors list", this.instructorsList);
     })
-    this.adminService.getCoursesList().subscribe((data:any)=>{
+    /**
+     * get course lisr
+     */
+    this.adminService.getCoursesList().subscribe((data: any) => {
       this.courseList = data;
+    })
+    /**
+     * get all count
+     */
+    this.adminService.getAllcount().subscribe((data: any) => {
+      this.allCounts = data;
+      console.log(this.allCounts);
     })
 
   }
@@ -27,5 +41,4 @@ export class DashboardComponent implements OnInit {
 
 
   }
-
 }

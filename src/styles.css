@@ -17,13 +17,14 @@ div#slide-out {
     padding-left: 0;
 }
 nav.navbar.fixed-top.double-nav {
-    background-image: linear-gradient(#6441A5, #2A0845);
+    background-image: linear-gradient(#242348, #5A55AA);
     background-color: #6441A5;
     height: 70px;
 }
 .sn-bg-4{
-    background-image: none !important;
-    background-color: #4D4F5C !important;
+    background-image:  url("./assets/images/component.png");
+    background-size: 292px;
+    /* background-color: #4D4F5C !important; */
 }
 
 

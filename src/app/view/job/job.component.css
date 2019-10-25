@@ -16,10 +16,18 @@
     background-color: #F5F6FA;
     color: #A3A6B4;
     border: none !important;
+    width: 50%;
+    display: inline-block;
 }
 .custom-select{
-    border: none;
-    background: #fff
+    border: 1px solid #d5d2d2;
+    background: #fff;
+    width: 100%;
+    background-image: url("../../../assets/images/drop-down.png") !important;
+    background-repeat: no-repeat;
+    background-position: center right 12px;
+    padding: 10px 35px 10px 10px;
+    background-size: 15px 18px;
 }
 .modal-header i {
     color: #3B86FF !important;
@@ -44,3 +52,10 @@
 .selectedDate span{
     color:  #3B86FF
 }
+table#dtBasicExample2 tr {
+    width: 100%;
+    display: block;
+}
+/* .custom-select select {
+    background-image: url("../../../assets/images/drpo-down.png");
+} */

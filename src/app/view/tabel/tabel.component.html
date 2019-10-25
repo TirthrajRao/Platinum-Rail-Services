@@ -1,0 +1,47 @@
+<div class="pageContent">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card table-first-dashboard">
+                    <div class="d-inline-block">
+                        <span class="search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search">
+                        </span>
+                    </div>
+                    <div class="table-responsive table-left-dashboard">
+                        <table class="table text-left" id="dtBasicExample">
+                            <thead>
+                                <tr *ngIf="headerList && headerList.length">
+                                    <th scope="col" *ngFor="let item of headerList">{{item}}</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let list of receviedData |paginate: { id: 'pagination2',itemsPerPage: 2, currentPage: Page };let i=index ">
+                                    <td>{{(2*(Page-1)+i)+1}}</td>
+                                    <td *ngFor="let item of list; let k = index;"><span
+                                            [ngClass]="k == 1 ? isDisplayColor? 'badge-pill badge-success' : '':''">{{item}}</span></td>
+                                    <td class="editIcon" *ngIf="receviedData == instructorList || coursList"><i
+                                            class="fas fa-edit success" (click)=editCourseOrInstructor((2*(Page-1)+i)) ></i></td>
+                                    <td *ngIf="receviedData == jobList "><i class="fas fa-eye" (click)=editCourseOrInstructor((2*(Page-1)+i))></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table_pagination">
+                        <pagination-controls id="pagination2" (pageChange)="Page = $event" [previousLabel]="labels.previousLabel"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

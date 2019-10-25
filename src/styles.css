@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+    margin: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+.pageContent{
+    padding-top: 80px;
+    padding-left: 260px;
+
+}
+div#slide-out {
+    margin-top: 70px;
+    overflow: hidden;
+    width: 260px;
+}
+.fixed-sn .double-nav, .fixed-sn main, .fixed-sn footer{
+    padding-left: 0;
+}
+nav.navbar.fixed-top.double-nav {
+    background-image: linear-gradient(#6441A5, #2A0845);
+    background-color: #6441A5;
+    height: 70px;
+}
+.sn-bg-4{
+    background-image: none !important;
+    background-color: #4D4F5C !important;
+}
+
+
+/* Responsive Css */
+
+@media(max-width:1441px){
+    .pageContent{
+        /* padding-top: 0; */
+        padding-left: 0
+    }
+}

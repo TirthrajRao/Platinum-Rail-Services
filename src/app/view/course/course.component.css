@@ -1,0 +1,27 @@
+.table-component-header span{
+    font-size: 28px;
+    color: #43425D;
+}
+.table-component-header button{
+    border-radius: 4px;
+}
+.table-component-header i {
+    font-size: 16px;
+}
+.modal-header i {
+    color: #3B86FF !important;
+    font-size: 28px;
+}
+
+.modal-header h4 {
+    color: #3B86FF !important;
+    font-size: 22px;
+}
+.modal-content{
+    border-radius: 20px;
+    /* height: 353px; */
+    /* width: 558px; */
+}
+.d-flex i {
+    font-size: 16px;
+}

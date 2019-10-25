@@ -1,0 +1,43 @@
+.navbar img{
+    height: 56px;
+    width: 42px;
+}
+.breadcrumb-dn p{
+    font-size: 28px;
+}
+
+
+li.admin {
+    display: inline-flex;
+    align-items: center;
+    padding: 40px 30px;
+}
+.admin i{
+    font-size: 54px;
+}
+.nav-item img{
+    height: 38px;
+    width: 38px;
+    border-radius: 50px;
+}
+.admin h6 {
+    margin-left: 20px;
+    font-size: 16px;
+    letter-spacing: 4px;
+    font-weight: 600;
+}
+ul.collapsible.collapsible-accordion li{
+    background-color: #43425D;
+}
+ul.collapsible.collapsible-accordion li.active {
+    border-left: 5px solid #A3A0FB;
+}
+a#navbarDropdownMenuLink{
+    font-size: 13px;
+    color: #AEAEAE;
+}
+a#navbarDropdownMenuLink:before {
+    content: "\007C";
+    font-size: 21px;
+    padding-right: 10px;
+}

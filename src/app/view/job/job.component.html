@@ -1,0 +1,114 @@
+<div class="pageContent">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="table-component-header w-100 p-3">
+                <span class="float-left ml-3">Job</span>
+                <button class="btn btn-primary float-right" (click)="openModal()"><i class="fas fa-plus mr-2"></i> Add
+                    Job</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-tabel [jobList]='jobList' [jobHeader]='jobHeader' (courseIndex)="getIndexToEdit($event)"></app-tabel>
+
+
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-plus-circle mr-3" *ngIf="!modelValues"></i>
+                <i class="fas fa-edit success mr-3" *ngIf="modelValues"></i>
+                <h4 class="modal-title w-100 font-weight-bold" *ngIf="!modelValues">Add Job</h4>
+                <h4 class="modal-title w-100 font-weight-bold" *ngIf="modelValues">Edit Job</h4>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="createNewJobForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="md-form">
+                                <input type="text" class="form-control" formControlName="clientName">
+                                <label data-error="wrong" data-success="right" for="defaultForm-email">Client</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="md-form">
+                                <input type="text" class="form-control" formControlName="location">
+                                <label data-error="wrong" data-success="right" for="defaultForm-pass">Location</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="instructorName">Choose Instructor</label>
+                            <select class="browser-default custom-select custom-select-lg mb-1" id="instructorName"
+                                formControlName="instructor" [(ngModel)]="singleInstructorName">
+                                <!-- <option>Choose Instructor</option> -->
+                                <option value="{{name.instructorName}}" *ngFor="let name of listOfInstructor">
+                                    {{name.instructorName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="courseName">Choose Course</label>
+                            <select class="browser-default custom-select" (change)="selectHandlerChange($event)"
+                                id="courseName" formControlName="course" [(ngModel)]="singleCourseName">
+                                <option>Choose Course</option>
+                                <option [value]="name.courseName" *ngFor="let name of listOfCourse">{{name.courseName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 ml-auto">
+                            <div class="md-form">
+                                <input placeholder="Selected date" type="text" id="startDate"
+                                    class="form-control datepicker" formControlName="startingDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <!-- <div formArrayName="frequency">
+                                <div [formGroupName]="i" *ngFor="let tech of createNewJobForm.controls.frequency.controls; let i = index"> -->
+                                    <label for="">Choose Frequency</label>
+                                    <div class="form-check" *ngFor="let name of weekDays">
+                                        <input type="checkbox" class="form-check-input" [checked]="name.selected"
+                                            (change)="selectFreequncy($event.target.checked,name.name)"  id="{{name.name}}"
+                                            name="materialExampleRadios">
+                                        <label class="form-check-label" for="{{name.name}}">{{name.name}}</label>
+                                    </div>
+                                <!-- </div>
+                            </div> -->
+                        </div>
+
+                        <div class="col-md-8" *ngIf="allDatesOfDay">
+                            <div class="selectedDate">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span class="ml-2"> Dates for the job </span>
+                                <div class="table-responsive">
+                                    <table class="table text-left" id="dtBasicExample">
+                                        <tr>
+                                            <th>Sr.No</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        <tr *ngFor="let dates of allDatesOfDay;let i=index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{dates}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="d-flex justify-content-center mb-2">
+                <button class="btn btn-primary" type="submit" (click)="addNewJob()" *ngIf="!modelValues">
+                    <i class="fas fa-plus mr-4"></i>Add Job</button>
+
+                <button class="btn btn-primary" type="submit" (click)="updateJob()" *ngIf="modelValues">
+                    <i class="fas fa-save mr-4"></i>Save</button>
+            </div>
+        </div>
+    </div>
+</div>

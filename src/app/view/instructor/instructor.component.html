@@ -1,0 +1,56 @@
+<div class="pageContent">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="table-component-header w-100 p-3">
+                <span class="float-left ml-3">Instructor</span>
+                <button class="btn btn-primary float-right" (click)="openModal()"><i
+                        class="fas fa-plus mr-2"></i> Add
+                    Instructor</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-tabel [instructorList]='instructorList' [instructorHeader]='instructorHeader' (courseIndex)="getIndexToEdit($event)"></app-tabel>
+
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-plus-circle mr-3" *ngIf="!modelValues"></i>
+                <i class="fas fa-edit success" *ngIf="modelValues"></i>
+                <h4 class="modal-title w-100 font-weight-bold" *ngIf="!modelValues">Add Instructor</h4>
+                <h4 class="modal-title w-100 font-weight-bold" *ngIf="modelValues">Edit Instructor</h4>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="createInstructorForm" autocomplete="off">
+                    <div class="md-form">
+                        <input type="text" class="form-control" formControlName="name">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Name</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="email" class="form-control" formControlName="email">
+                        <label data-error="wrong" data-success="right" for="defaultForm-pass">Email Address</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="password" class="form-control" formControlName="password">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Password</label>
+                    </div>
+                    <div class="md-form" >
+                        <input type="password" class="form-control" formControlName="confirmPassword">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Confirm Password</label>
+                    </div>
+                </form>
+            </div>
+            <div class="d-flex justify-content-center mb-2">
+                <button class="btn btn-primary" type="submit" (click)="addNewInstructor()" *ngIf="!modelValues">
+                    <i class="fas fa-plus mr-4"></i>Add Instructor</button>
+
+                <button class="btn btn-primary" type="submit" (click)="updateInstructor()" *ngIf="modelValues">
+                    <i class="fas fa-save mr-4"></i>Save</button>
+            </div>
+        </div>
+    </div>
+</div>

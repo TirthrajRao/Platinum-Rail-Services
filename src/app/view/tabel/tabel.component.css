@@ -1,0 +1,69 @@
+.card.table-first-dashboard input {
+    border-bottom: 0 !important;
+    background-color: #fff;
+    font-size: 16px !important;
+    padding-left: 20px;
+}
+.card.table-first-dashboard input::placeholder{
+    color: #C8C8D4;
+}
+.table th{
+    background-color: #F5F6FA;
+    color: #A3A6B4;
+ border: none !important;
+ padding: 20px 30px;
+}
+.table td{
+    color:#4D4F5C;
+    padding: 30px;
+}
+.card.table-first-dashboard span.badge-pill {
+    padding: 5px 26px;
+    color: #fff;
+}
+.editIcon i {
+    color: #0FBB1A;
+}
+.search i {
+    color: #BCBCCB;
+    position: absolute;
+    top: 34%;
+    bottom: 0;
+    margin: auto;
+    left: 25px;
+}
+.search{
+    display: inline-block;
+    width: 100%;
+    padding: 10px 30px;
+    position: relative;
+}
+.table_pagination {
+    display: table;
+    margin: auto;
+}
+.modal-header i {
+    color: #3B86FF !important;
+    font-size: 28px;
+}
+
+.modal-header h4 {
+    color: #3B86FF !important;
+    font-size: 22px;
+}
+.modal-content{
+    border-radius: 20px;
+    /* height: 353px; */
+    /* width: 558px; */
+}
+@media(max-width: 991px){
+    .table td{
+        padding: 20px 10px;
+    }
+}
+@media(max-width: 767px){
+    table#dtBasicExample {
+        min-width: 780px;
+        max-width: 780px;
+    }
+}

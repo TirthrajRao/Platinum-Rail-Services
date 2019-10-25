@@ -1,0 +1,100 @@
+<div class="pageContent">
+    <div class="dashBoardSection">
+        <div class="container-fluid">
+            <h2>Overview</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-image-1">
+                        <div class="card-content text-right p-3">
+                            <span>Total Jobs</span>
+                            <p>246</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-image-2">
+                        <div class="card-content text-right p-3">
+                            <span>Instructors</span>
+                            <p>5</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card card-image-3">
+                        <div class="card-content text-right p-3">
+                            <span>Total Course</span>
+                            <p>15</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="card table-first-dashboard">
+                        <div class="d-inline-block p-4">
+                            <span class="float-left">Instructor</span>
+                            <span class="float-right pl-5 search">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Search" class="w-50">
+                            </span>
+                        </div>
+                        <div class="table-responsive table-left-dashboard">
+                            <table class="table text-left">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sr.No</th>
+                                        <th scope="col">Instructors</th>
+                                        <th scope="col">Jobs</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of instructorsList; let i =index">
+                                        <!-- <th scope="row">1</th> -->
+                                        <td>{{i+1}}</td>
+                                        <td>{{list.instructorName}}</td>
+                                        <td><span class="badge-pill badge-success">{{list.jobs}}</span></td>
+                                        <td class="editIcon"><i class="fas fa-edit success"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card table-first-dashboard">
+                        <div class="d-inline-block p-4">
+                            <h3 class="float-left">Courses</h3>
+                            <span class="float-right  search">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Search" class="w-50">
+                            </span>
+                        </div>
+                        <div class="table-responsive table-left-dashboard">
+                            <table class="table text-left">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sr.No</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Duration (Days)</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of courseList; let i =index">
+                                        <!-- <th scope="row">1</th> -->
+                                        <td>{{i+1}}</td>
+                                        <td>{{list.courseName}}</td>
+                                        <td><span class="badge-pill badge-danger">{{list.duration}}</span></td>
+                                        <td class="editIcon"><i class="fas fa-edit success"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="pageContent">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="table-component-header w-100 p-3">
+                <span class="float-left ml-3">Course</span>
+                <button class="btn btn-primary float-right" (click)=openModal() ><i
+                        class="fas fa-plus mr-2"></i> Add
+                    Course</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-tabel [coursList]='courseList'  [courseHeader]='courseHeader' (courseIndex)="getIndexToEdit($event)"></app-tabel>
+
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-plus-circle mr-3" *ngIf="!modelValues"></i>
+                <i class="fas fa-edit success" *ngIf="modelValues"></i>
+                <h4 class="modal-title w-100 font-weight-bold" *ngIf="!modelValues">Add Course</h4>
+                <h4 class="modal-title w-100 font-weight-bold" *ngIf="modelValues">Edit Course</h4>
+            </div>
+            <div class="modal-body" >
+                <form [formGroup]="createCourseForm" autocomplete="off">
+                    <div class="md-form">
+                        <input type="text"  id="defaultForm-email" class="form-control" formControlName="courseName">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Course
+                            Title</label>
+                    </div>
+                    <div class="md-form">
+                        <input type="number" id="defaultForm-pass" class="form-control" formControlName="duration">
+                        <label data-error="wrong" data-success="right" for="defaultForm-pass">Course Duration in
+                            Days</label>
+                    </div>
+                </form>
+            </div>
+            <div class="d-flex justify-content-center mb-2">
+                <button class="btn btn-primary" type="submit" (click)="addNewCourse()" *ngIf="!modelValues">
+                    <i class="fas fa-plus mr-4"></i>Add Course</button>
+
+                <button class="btn btn-primary" type="submit" (click)="updateCourse()" *ngIf="modelValues">
+                    <i class="fas fa-save mr-4"></i>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
